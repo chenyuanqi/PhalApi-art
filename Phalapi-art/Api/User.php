@@ -7,9 +7,18 @@ class Api_User extends PhalApi_Api {
             'getBaseInfo' => array(
                 'userId' => array('name' => 'user_id', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
             ),
+            //getMultiBaseInfo：接口方法名
             'getMultiBaseInfo' => array(
-            'userIds' => array('name' => 'user_ids', 'type' => 'array', 'format' => 'explode', 'require' => true, 'desc' => '用户ID，多个以逗号分割'),
-        ),
+                /**
+                 * @param string  userIds 接口方法中使用的参数名
+                 * @param string  type    数据类型，如 int,float,array 等
+                 * @param string  format  格式化处理方法（如下 explode 将处理 user_ids 以英文逗号分割为数组形式）
+                 * @param mixed   default 参数默认值
+                 * @param boolean require 参数是否必须，值为 true 或者 false
+                 * @param string  desc    参数的描述，用于接口文档
+                 */
+                'userIds' => array('name' => 'user_ids', 'type' => 'array', 'format' => 'explode', 'default'=> '', 'require' => true, 'desc' => '用户ID，多个以逗号分割'),
+            ),
         );
     }
 

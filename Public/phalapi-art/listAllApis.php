@@ -137,7 +137,7 @@ function listDir($dir) {
     </table>
 </div>
 
-<p>&copy; Powered  By <a href="http://www.phalapi.net/" target="_blank">PhalApi <?php echo PHALAPI_VERSION; ?></a> <p>
+<p>&copy; Powered  By <a href="http://www.chenyuanqi.com/" target="_blank">最懒进化 <?php echo PHALAPI_VERSION; ?></a> <p>
 </div>
 
 </body>
