@@ -6,6 +6,7 @@ class Api_User extends PhalApi_Api {
         return array(
             'getBaseInfo' => array(
                 'userId' => array('name' => 'user_id', 'type' => 'int', 'min' => 1, 'require' => true, 'desc' => '用户ID'),
+                'email'  => array('name' => 'email', 'type' => 'email', 'isEmail' => 1, 'require' => true, 'desc' => '用户邮箱'),
             ),
             //getMultiBaseInfo：接口方法名
             'getMultiBaseInfo' => array(
