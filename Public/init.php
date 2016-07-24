@@ -19,6 +19,9 @@ $loader = new PhalApi_Loader(API_ROOT, 'Library');
 //自动加载，DI 依赖注入
 DI()->loader = $loader;
 
+//加载 Demo 目录
+//DI()->loader->addDirs("Demo");
+
 //配置
 DI()->config = new PhalApi_Config_File(API_ROOT . '/Config');
 /**
@@ -65,6 +68,12 @@ DI()->filter = 'PhalApi_Filter_SimpleMD5';
 DI()->cache = function () {
     return new PhalApi_Cache_Memcache(DI()->config->get('sys.mc'));
 };
+ */
+/**
+ * 文件缓存
+ * DI()->cache = new PhalApi_Cache_File(array(
+ *     'path' => API_ROOT."/Runtime/data"
+ * ));
  */
 
 /**

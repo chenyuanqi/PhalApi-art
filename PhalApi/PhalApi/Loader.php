@@ -28,12 +28,15 @@ class PhalApi_Loader {
     protected $basePath = '';
 
     public function __construct($basePath, $dirs = array()) {
+        //init.php 设置框架根路径
         $this->setBasePath($basePath);
 
+        //应用入口添加目录
         if (!empty($dirs)) {
             $this->addDirs($dirs);
         }
 
+        //自动加载注册，将函数/类注册到SPL __autoload函数队列中，如果该队列中的函数/类尚未激活，则激活它们。
     	spl_autoload_register(array($this, 'load'));
     }
     
@@ -79,14 +82,17 @@ class PhalApi_Loader {
      * @param string $className 等待加载的类名
      */ 
     public function load($className) {
+        //判断类或接口是否存在
         if (class_exists($className, FALSE) || interface_exists($className, FALSE)) {
             return;
         }
 
+        //尝试加载类是否成功
         if ($this->loadClass(PHALAPI_ROOT, $className)) {
             return;
         }
 
+        //如果加载类失败，遍历目录集合并加载相应类文件
         foreach ($this->dirs as $dir) {
             if ($this->loadClass($this->basePath . DIRECTORY_SEPARATOR . $dir, $className)) {
                 return;

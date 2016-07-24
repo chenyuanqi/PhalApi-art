@@ -22,3 +22,5 @@ class PhalApi_Request_Formatter_Int extends PhalApi_Request_Formatter_Base imple
         return intval($this->filterByRange(intval($value), $rule));
     }
 }
+
+
