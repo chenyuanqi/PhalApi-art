@@ -58,6 +58,9 @@ else
 
 /** ---------------- 定制注册 可选服务组件 ---------------- **/
 
+//签名验证服务
+DI()->filter = 'PhalApi_Filter_SimpleToken';
+
 /**
 //签名验证服务
 DI()->filter = 'PhalApi_Filter_SimpleMD5';
