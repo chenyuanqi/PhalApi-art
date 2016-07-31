@@ -12,4 +12,7 @@ return array(
         //'sign' => array('name' => 'sign', 'require' => true),
     ),
 
+    'apiWhiteService' => array(
+        'User.UserLogin',
+    ),
 );
