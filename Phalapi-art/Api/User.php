@@ -20,6 +20,11 @@ class Api_User extends PhalApi_Api {
                  */
                 'userIds' => array('name' => 'user_ids', 'type' => 'array', 'format' => 'explode', 'default'=> '', 'require' => true, 'desc' => '用户ID，多个以逗号分割'),
             ),
+            //userLogin：用户登录
+            'userLogin' => array(
+                'user' => array('name' => 'username', 'type' => 'string', 'min' => 6, 'max' => 20, 'require' => true, 'desc' => '用户登录名称'),
+                'pwd'  => array('name' => 'password', 'type' => 'string', 'require' => true, 'desc' => '用户登录密码'),
+            ),
         );
     }
 
@@ -75,6 +80,37 @@ class Api_User extends PhalApi_Api {
         foreach ($this->userIds as $userId) {
             $rs['list'][] = $domain->getBaseInfo($userId);
         }
+
+        return $rs;
+    }
+
+    /**
+     * 用户登录
+     * @desc 用于用户登录验证并获取登录口令
+     * @return int info.uid 用户 id
+     * @return string info.token       登录token
+     * @return string info.effect_time 登录有效时间
+     */
+    public function userLogin() {
+        //定义返回数据初始结构
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+        //使用 Domain 领域层校验用户登录信息的有效性
+        $domain = new Domain_User();
+        $info = $domain->checkLogin($this->user, $this->pwd);
+
+        //数据异常情况处理
+        if (empty($info)) {
+            //记录 logger
+            DI()->logger->debug('login fail!', $this->user);
+
+            //返回信息构造
+            $rs['code'] = 1;
+            $rs['msg']  = T('login fail!');
+            return $rs;
+        }
+
+        //登录正常，获取 token 返回
+        $rs['info'] = $domain->getTokenByUid($info['id']);
 
         return $rs;
     }

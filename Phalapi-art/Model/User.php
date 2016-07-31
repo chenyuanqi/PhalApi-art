@@ -2,6 +2,14 @@
 
 class Model_User extends PhalApi_Model_NotORM {
 
+    public function getByUserLogin($username, $password) {
+        return $this->getORM()
+            ->select('*')
+            ->where('name = ?', $username)
+            ->where('password = ?', self::changePassword($password))
+            ->fetch();
+    }
+
     public function getByUserId($userId) {
         //查询id为$userId的所有信息
         return $this->getORM()
@@ -20,6 +28,10 @@ class Model_User extends PhalApi_Model_NotORM {
             DI()->cache->set($key, $rs, 600);
         }
         return $rs;
+    }
+
+    private function changePassword($password) {
+        return md5($password);
     }
 
     protected function getTableName($id) {
