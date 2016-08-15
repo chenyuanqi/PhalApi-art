@@ -103,6 +103,9 @@ abstract class PhalApi_Model_NotORM implements PhalApi_Model {
      */
     protected function getORM($id = NULL) {
         $table = $this->getTableName($id);
+        if('slave' == $id){
+            return DI()->slave->$table;
+        }
         return DI()->notorm->$table;
     }
 

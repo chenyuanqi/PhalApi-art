@@ -45,6 +45,10 @@ DI()->logger = new PhalApi_Logger_File(API_ROOT . '/Runtime', PhalApi_Logger::LO
 
 //数据操作 - 基于NotORM，$_GET['__sql__']可自行改名，输出 sql 信息
 DI()->notorm = new PhalApi_DB_NotORM(DI()->config->get('dbs'), !empty($_GET['__sql__']));
+//注册从（读）库
+DI()->slave = function (){
+    return new PhalApi_DB_NotORM(DI()->config->get('slave'), !empty($_GET['__sql__']));
+};
 
 //翻译语言包设定
 if(empty($_GET['lang']) || 'en' != $_GET['lang'])
