@@ -34,7 +34,7 @@ DI()->config = new PhalApi_Config_File(API_ROOT . '/Config');
 DI()->debug = !empty($_GET['__debug__']) ? true : DI()->config->get('sys.debug');
 
 //日志纪录
-DI()->logger = new PhalApi_Logger_File(API_ROOT . '/Runtime', PhalApi_Logger::LOG_LEVEL_DEBUG | PhalApi_Logger::LOG_LEVEL_INFO | PhalApi_Logger::LOG_LEVEL_ERROR);
+DI()->logger = new PhalApi_Logger_File(DI()->config->get('cache.file.log'), PhalApi_Logger::LOG_LEVEL_DEBUG | PhalApi_Logger::LOG_LEVEL_INFO | PhalApi_Logger::LOG_LEVEL_ERROR);
 /**
  * 日志操作示例：
  * DI()->logger->info('This is a info level log!', array());
@@ -65,6 +65,9 @@ else
 //签名验证服务
 DI()->filter = 'PhalApi_Filter_SimpleToken';
 
+//redis链接
+DI()->redis = new PhalApi_Cache_Redis_Lite(DI()->config->get('cache.redis.servers'));
+
 /**
 //签名验证服务
 DI()->filter = 'PhalApi_Filter_SimpleMD5';
@@ -73,14 +76,14 @@ DI()->filter = 'PhalApi_Filter_SimpleMD5';
 /**
 //缓存 - Memcache/Memcached
 DI()->cache = function () {
-    return new PhalApi_Cache_Memcache(DI()->config->get('sys.mc'));
+    return new PhalApi_Cache_Memcache(DI()->config->get('cache.mc'));
 };
+ *
  */
+
 /**
  * 文件缓存
- * DI()->cache = new PhalApi_Cache_File(array(
- *     'path' => API_ROOT."/Runtime/data"
- * ));
+ * DI()->cache = new PhalApi_Cache_File(DI()->config->get('cache.file.cache'));
  */
 
 /**
