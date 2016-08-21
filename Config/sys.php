@@ -9,14 +9,6 @@ return array(
 	 */
 	'debug' => true,
 
-	/**
-	 * MC缓存服务器参考配置
-	 */
-	 'mc' => array(
-        'host' => '127.0.0.1',
-        'port' => 11211,
-	 ),
-
     /**
      * 加密
      */

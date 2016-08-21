@@ -13,6 +13,8 @@ return array(
     ),
 
     'apiWhiteService' => array(
+        'Default.Index',
+        'Default.Redis',
         'User.UserLogin',
     ),
 );
